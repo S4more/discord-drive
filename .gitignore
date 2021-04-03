@@ -3,8 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+settings.yaml
 client_secrets.json
 credentials.json
+bot.ini
 
 # C extensions
 *.so

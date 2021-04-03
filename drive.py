@@ -13,11 +13,13 @@ class Drive():
         # TODO -> Create folder if it's equal to none.
         self._current_year_folder_id = self._get_folder_by_name(datetime.datetime.now().year)['id'];
 
-    def upload_image(self, title: str, image_path: str) -> str:
+    def upload_image(self, title: str, image_path: str, sender=None) -> str:
         try:
             file = self.drive.CreateFile({'parents': [{'id': self._current_year_folder_id}]})
             file.SetContentFile(image_path)
             file['title'] = title;
+            if sender:
+                file['description'] = f"Enviado por {sender}"
             file.Upload()
             return file['embedLink']
         except:

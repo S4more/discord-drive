@@ -1,5 +1,10 @@
 from discord.ext import commands, tasks
 from drive import Drive
+from configparser import ConfigParser
+
+config = ConfigParser()
+config.read("bot.ini")
+
 import os
 
 bot = commands.Bot(command_prefix=('!salva '))
@@ -11,10 +16,11 @@ async def on_command_error(ctx, error):
         return
 
 class Utils(commands.Cog):
-    @commands.command(pass_context=True, name="foto", brief="Guarda uma mensagem de texto ou imagem no google drive")
-    async def foto(self, ctx, title, link):
-        os.system(f"wget -O ./imgs/{title} {link}")
-        link = drive.upload_image(title, f"./imgs/{title}")
+    @commands.command(pass_context=True, name="foto", brief="Guarda uma imagem no google drive")
+    async def foto(self, ctx, *args):
+        title = '_'.join(args[:-1])
+        os.system(f"wget -O ./imgs/{title} {args[-1]}")
+        link = drive.upload_image(title, f"./imgs/{title}", ctx.author.name)
         os.system(f"rm ./imgs/{title}")
         await ctx.send(f"Foto salva com sucesso. Link: {link}")
 
@@ -31,4 +37,4 @@ class Utils(commands.Cog):
 
 bot.add_cog(Utils())
 
-bot.run("")
+bot.run(config["BOT"]["TOKEN"])
