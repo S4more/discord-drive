@@ -1,6 +1,7 @@
 from discord.ext import commands, tasks
 from drive import Drive
 from configparser import ConfigParser
+import sys
 
 config = ConfigParser()
 config.read("bot.ini")
@@ -11,6 +12,7 @@ bot = commands.Bot(command_prefix=('!salva '))
 drive = Drive()
 
 class Utils(commands.Cog):
+    @commands.has_any_role('Tchola', 'Kapopeiro', 'New Tchola')
     @commands.command(pass_context=True, name="foto", brief="Guarda uma imagem no google drive")
     async def foto(self, ctx, *args):
         if 'http' in args[-1]:
@@ -41,4 +43,5 @@ class Utils(commands.Cog):
 
 bot.add_cog(Utils())
 
-bot.run(config["BOT"]["TOKEN"])
+if __name__ == '__main__':
+    bot.run(config["BOT"]["TOKEN"])
