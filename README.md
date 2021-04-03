@@ -9,7 +9,7 @@ This bot downloads any image/gif/video (or anything that you would be able to us
 ## Set Up:
   ### pip requirements
   ```
-  pip3 install discord.py pydrive
+  pip3 install discord.py pydrive youtube_dl
   ```
   ### bot.ini
   The config file.
